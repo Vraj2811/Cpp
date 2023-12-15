@@ -1,46 +1,53 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
-bool uniqueOccurrences(vector<int> &arr)
+class Solution
 {
-    vector<int> counter;
-
-    sort(arr.begin(), arr.end());
-
-    int count = 1;
-    for (int i = 1; i < arr.size(); i++)
+public:
+    bool uniqueOccurrences(vector<int> &arr)
     {
-        if (arr[i] == arr[i - 1])
-        {
-            count += 1;
-        }
-        else
-        {
-            counter.push_back(count);
-            count = 1;
-        }
-    }
-    counter.push_back(count);
+        sort(arr.begin(), arr.end());
 
-    for (int i = 1; i < counter.size(); i++)
-    {
-        if (counter[i] == counter[i - 1])
+        vector<int> occ;
+        int i = 0;
+
+        while (i < arr.size())
         {
-            return false;
+            int c = 1;
+
+            while (i + 1 < arr.size() && arr[i] == arr[i + 1])
+            {
+                c++;
+                i++;
+            }
+
+            occ.push_back(c);
+            i++;
         }
+
+        sort(occ.begin(), occ.end());
+
+        for (i = 1; i < occ.size(); i++)
+        {
+            if (occ[i] == occ[i - 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
-    return true;
-}
+};
 
 int main()
 {
+    Solution solution;
     vector<int> arr = {1, 2, 2, 1, 1, 3};
 
-    bool result = uniqueOccurrences(arr);
-
-    if (result)
+    if (solution.uniqueOccurrences(arr))
     {
         cout << "Occurrences are unique." << endl;
     }

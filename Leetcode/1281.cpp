@@ -1,22 +1,26 @@
 #include <iostream>
 using namespace std;
 
-int main()
+int subtractProductAndSum(int n)
 {
-    int n;
-    cin >> n;
     int sum = 0;
-    int product = 1;
+    int prod = 1;
 
-    while (n != 0)
+    while (n > 0)
     {
-        sum += (n % 10);
-        product *= (n % 10);
+        int a = n % 10;
+        sum += a;
+        prod *= a;
         n = n / 10;
     }
+    return (prod - sum);
+}
 
-    int ans = product - sum;
+int main()
+{
+    int a;
+    cin >> a;
+    int ans = subtractProductAndSum(a);
     cout << ans << endl;
-
     return 0;
 }

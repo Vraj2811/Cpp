@@ -1,64 +1,65 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-int PeakSearch(int arr[], int low, int high)
+void PrintArray(vector<int>& arr)
 {
-    while (low <= high)
+    cout << "The array is: ";
+    for (int i = 0; i < arr.size(); i++)
     {
-        int mid = low + (high - low) / 2;
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
 
-        if (mid > 0 && mid < high - 1)
+int peakIndexInMountainArray(vector<int>& arr) {
+    int start = 0;
+    int end = arr.size() - 1;
+
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+        if (arr[mid - 1] < arr[mid] && arr[mid] > arr[mid + 1])
         {
-            if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1])
-            {
-                return mid;
-            }
-            else if (arr[mid] < arr[mid - 1])
-            {
-                high = mid - 1;
-            }
-            else
-            {
-                low = mid + 1;
-            }
+            return mid;
         }
-        else if (mid == 0)
+        else if (arr[mid - 1] < arr[mid] && arr[mid] < arr[mid + 1])
         {
-            if (arr[mid] > arr[mid + 1])
-            {
-                return mid;
-            }
-            else
-            {
-                low = mid + 1;
-            }
+            start = mid + 1;
         }
-        else if (mid == high - 1)
+        else if (arr[mid - 1] > arr[mid] && arr[mid] > arr[mid + 1])
         {
-            if (arr[mid] > arr[mid - 1])
-            {
-                return mid;
-            }
-            else
-            {
-                high = mid - 1;
-            }
+            end = mid - 1;
         }
     }
-    return -1;
+    return -1; // Peak not found
 }
 
 int main()
 {
-    int arr[5] = {0, 7, 8, 9, 2};
-    int place = PeakSearch(arr, 0, 4);
+    int size;
+    cout << "Enter the size of the array: ";
+    cin >> size;
+    cout << "Enter the elements of the array in mountain order:" << endl;
+    vector<int> arr(size);
 
-    if (place == -1)
+    for (int i = 0; i < size; i++)
     {
-        cout << "No peak element found." << endl;
+        cin >> arr[i];
+    }
+
+    PrintArray(arr);
+
+    int peakIndex = peakIndexInMountainArray(arr);
+    if (peakIndex != -1)
+    {
+        cout << "Peak element index: " << peakIndex << endl;
+        cout << "Peak element value: " << arr[peakIndex] << endl;
     }
     else
     {
-        cout << "Peak element " << arr[place] << " is at index " << place << "." << endl;
+        cout << "Peak element not found in the array." << endl;
     }
+
+    return 0;
 }

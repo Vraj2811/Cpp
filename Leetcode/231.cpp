@@ -1,19 +1,20 @@
 #include <iostream>
 using namespace std;
 
-int main()
+bool isPowerOfTwo(int n)
 {
-    int n;
-    cin >> n;
-    int count = 0;
-
     if (n <= 0)
     {
-        cout << "0" << endl;
-        return 0;
+        return false;
     }
+    return (n & (n - 1)) == 0;
+}
 
-    cout << ((n & (n - 1)) == 0);
-
+int main()
+{
+    int a;
+    cin >> a;
+    int ans = isPowerOfTwo(a);
+    cout << ans << endl;
     return 0;
 }
